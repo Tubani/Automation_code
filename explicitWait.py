@@ -1,15 +1,14 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.wait import WebDriverWait
 import time
-
-from selenium.webdriver.support import wait
 
 def type_and_enter(element,text):
     element.send_keys(text + Keys.ENTER)    
 
 Source = "Dhaka (DAC - Shahjalal Intl.)" 
-Destination = "New York (NYC - All Airports)"
+Destination = "New York, NY (JFK-John F. Kennedy Intl.)"
 
 
 driver = webdriver.Chrome()
@@ -35,6 +34,11 @@ num = driver.find_element(By.XPATH,'//*[@id="wizard-flight-tab-oneway"]/div[2]/d
 done = driver.find_element(By.XPATH,'//*[@id="wizard-flight-tab-oneway"]/div[2]/div[2]/div/div/div/div/div[2]/div/div[3]/button').click()
 search = driver.find_element(By.XPATH,'//*[@id="wizard-flight-pwa-1"]/div[3]/div[2]/button').click()
 
-wait = wait.WebDriverWait(driver,10)
+element = WebDriverWait(driver, 10).until(lambda x: x.find_element(By.XPATH,'//*[@id="stops-1"]'))
+element.click()
+
+time.sleep(5)
 driver.quit()
+
+
 
